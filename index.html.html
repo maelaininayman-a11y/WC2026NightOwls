@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Cup 2026 Prediction Card</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #111622;
+            --gold: #d4af37;
+            --silver: #c0c0c0;
+            --orange: #ff7b00;
+            --blue: #0070f3;
+            --purple: #8a2be2;
+            --red: #e91424;
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+            --border-color: #21262d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .sports-card {
+            background: linear-gradient(180deg, #141926 0%, #0b0f19 100%);
+            border: 4px solid var(--gold);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        }
+
+        /* --- THE STRIPED RED BANNER STYLE --- */
+        .card-header {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            
+            background: #810e14;
+            background-image: repeating-linear-gradient(
+                45deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 3px,
+                transparent 3px,
+                transparent 12px
+            );
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            z-index: 2;
+        }
+
+        .header-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-grow: 1;
+            z-index: 2;
+        }
+
+        .tag-official {
+            font-size: 8px;
+            font-weight: 800;
+            color: #d4af37;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 1px;
+            font-family: 'Arial Narrow', sans-serif;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .tag-countries {
+            font-size: 9px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 5px;
+        }
+
+        .gold-divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold) 20%, var(--gold) 80%, transparent);
+            margin: 15px 0;
+        }
+
+        /* --- INTERACTIVE FORM LAYOUT --- */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+        }
+
+        .banner-input-container {
+            background: linear-gradient(90deg, #1a2436, #0e131f);
+            padding: 2px;
+            border: 2px solid var(--gold);
+            border-radius: 6px;
+        }
+
+        .banner-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 900;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 8px;
+        }
+
+        .prediction-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .pred-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .pred-box.champions { border-left: 4px solid var(--gold); }
+        .pred-box.runnerup { border-left: 4px solid var(--silver); }
+        .pred-box.darkhorse { border-left: 4px solid var(--orange); }
+        .pred-box.scorer { border-left: 4px solid var(--gold); }
+        .pred-box.bestplayer { border-left: 4px solid var(--blue); }
+        .pred-box.shock { border-left: 4px solid var(--purple); }
+
+        .pred-label {
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .champions .pred-label { color: var(--gold); }
+        .runnerup .pred-label { color: var(--silver); }
+        .darkhorse .pred-label { color: var(--orange); }
+        .scorer .pred-label { color: var(--gold); }
+        .bestplayer .pred-label { color: var(--blue); }
+        .shock .pred-label { color: var(--purple); }
+
+        .card-select, .card-input {
+            width: 100%;
+            background: #070a12;
+            border: 1px solid #21262d;
+            color: #fff;
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .morocco-section {
+            background: rgba(193, 16, 34, 0.1);
+            border: 1px solid #c11022;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 20px;
+        }
+
+        .morocco-section h3 {
+            font-size: 13px;
+            color: #fff;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(193, 16, 34, 0.3);
+            padding-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .match-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            background: rgba(0,0,0,0.3);
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .team-lbl { font-size: 12px; font-weight: 600; width: 40%; display: flex; align-items: center; gap: 6px; }
+        .team-lbl.right { justify-content: flex-end; text-align: right; }
+        .vs-text { font-size: 10px; color: var(--text-muted); }
+
+        .score-inputs { display: flex; align-items: center; gap: 4px; }
+
+        .score-box {
+            width: 32px;
+            height: 32px;
+            background: #000;
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            text-align: center;
+            color: var(--gold);
+            font-size: 16px;
+            font-weight: 800;
+            outline: none;
+        }
+
+        .inline-flag {
+            width: 18px;
+            height: 12px;
+            object-fit: cover;
+            border-radius: 1px;
+        }
+
+        .btn-download {
+            width: 100%;
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(233, 20, 36, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sports-card" id="predictionCard">
+        
+        <div class="card-header">
+            <img class="logo-img" id="fifaLogo" src="https://i.postimg.cc/Pqb1phpK/fifa-world-cup-2026-white-10e0b37b.png" crossOrigin="anonymous" alt="WC2026">
+            <div class="header-center">
+                <span class="tag-official">Official Prediction</span>
+                <div class="card-title">World Cup 2026</div>
+                <span class="tag-countries">USA · CANADA · MEXICO</span>
+            </div>
+            <img class="logo-img" id="nightOwlLogo" src="https://i.postimg.cc/tCP5bxvV/night-owl-logo-Imgur.png" crossOrigin="anonymous" alt="Night Owl">
+        </div>
+        
+        <div class="gold-divider"></div>
+
+        <div class="form-group">
+            <label>Prediction Cardholder Name</label>
+            <div class="banner-input-container">
+                <input type="text" class="banner-input" id="userName" value="YOUR NAME">
+            </div>
+        </div>
+
+        <div class="prediction-grid">
+            <div class="pred-box champions"><div class="pred-label">🏆 Champions</div><input type="text" class="card-input" id="predChamp" value="Morocco"></div>
+            <div class="pred-box runnerup"><div class="pred-label">🥈 Runner-up</div><input type="text" class="card-input" id="predRunner" value="France"></div>
+            <div class="pred-box darkhorse"><div class="pred-label">🔥 Dark Horse</div><input type="text" class="card-input" id="predDark" value="Japan"></div>
+            <div class="pred-box scorer"><div class="pred-label">⚽ Top Goalscorer</div><input type="text" class="card-input" id="predScorer" value="Brahim Díaz"></div>
+            <div class="pred-box bestplayer"><div class="pred-label">⭐ Best Player</div><input type="text" class="card-input" id="predPlayer" value="Achraf Hakimi"></div>
+            <div class="pred-box shock"><div class="pred-label">⚡ Surprise Shock</div><input type="text" class="card-input" id="predShock" value="Argentina Out GS"></div>
+        </div>
+
+        <div class="morocco-section">
+            <h3>🇲🇦 Morocco Predictions</h3>
+            <div class="form-group" style="margin-bottom: 12px;">
+                <select class="card-select" id="moroccoFinish">
+                    <option>Group Stage</option>
+                    <option>Round of 16</option>
+                    <option>Quarter-Finals</option>
+                    <option selected>🏆 Champions</option>
+                </select>
+            </div>
+            
+            <div class="match-row">
+                <span class="team-lbl">🇲🇦 Morocco</span>
+                <div class="score-inputs"><input type="text" class="score-box" id="scoreM1" value="2"> <span class="vs-text">VS</span> <input type="text" class="score-box" id="scoreO1" value="1"></div>
+                <span class="team-lbl right">Brazil 🇧🇷</span>
+            </div>
+            
+            <div class="match-row">
+                <span class="team-lbl">🇲🇦 Morocco</span>
+                <div class="score-inputs"><input type="text" class="score-box" id="scoreM2" value="3"> <span class="vs-text">VS</span> <input type="text" class="score-box" id="scoreO2" value="0"></div>
+                <span class="team-lbl right">Scotland <img class="inline-flag" id="scotlandFlag" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Flag_of_Scotland.svg/1920px-Flag_of_Scotland.svg.png" crossOrigin="anonymous" alt="Scotland"></span>
+            </div>
+            
+            <div class="match-row">
+                <span class="team-lbl">🇲🇦 Morocco</span>
+                <div class="score-inputs"><input type="text" class="score-box" id="scoreM3" value="4"> <span class="vs-text">VS</span> <input type="text" class="score-box" id="scoreO3" value="0"></div>
+                <span class="team-lbl right">Haiti 🇭🇹</span>
+            </div>
+        </div>
+
+        <button class="btn-download" id="downloadBtn">Download Card Image</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+        const btn = this;
+        btn.innerText = "Generating Card Image...";
+        
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 800;
+        canvas.height = 1100;
+
+        // Base background layout
+        ctx.fillStyle = '#0f1422';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#d4af37';
+        ctx.lineWidth = 10;
+        ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+
+        // --- THE STRIPED RED BANNER GENERATION ---
+        ctx.save();
+        ctx.fillStyle = '#810e14';
+        ctx.fillRect(40, 40, 720, 150);
+
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.18)';
+        ctx.lineWidth = 4;
+        for (let i = -200; i < 1000; i += 14) {
+            ctx.beginPath();
+            ctx.moveTo(i, 40);
+            ctx.lineTo(i + 150, 190);
+            ctx.stroke();
+        }
+        ctx.restore();
+
+        // Banner Logos Rendering
+        const fLogo = document.getElementById('fifaLogo');
+        const noLogo = document.getElementById('nightOwlLogo');
+        try {
+            if(fLogo.complete) ctx.drawImage(fLogo, 60, 60, 110, 110);
+            if(noLogo.complete) ctx.drawImage(noLogo, 630, 60, 110, 110);
+        } catch(e) {}
+
+        // Text typography setup arrays
+        ctx.fillStyle = '#d4af37';
+        ctx.font = 'bold 14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('OFFICIAL PREDICTION', 400, 80);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 42px "Arial Narrow", sans-serif';
+        ctx.fillText('WORLD CUP 2026', 400, 125);
+
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.font = 'bold 15px sans-serif';
+        ctx.letterSpacing = "4px";
+        ctx.fillText('USA · CANADA · MEXICO', 400, 160);
+        ctx.letterSpacing = "0px";
+
+        // Accent separator bar lines
+        ctx.fillStyle = '#d4af37';
+        ctx.fillRect(40, 215, 720, 4);
+
+        // User Custom Nameplate Box component
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(40, 240, 720, 70);
+        ctx.strokeStyle = '#d4af37';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(40, 240, 720, 70);
+
+        const nameVal = document.getElementById('userName').value.toUpperCase();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 30px sans-serif';
+        ctx.fillText(nameVal, 400, 285);
+
+        // Main prediction boxes block system
+        function drawBox(title, val, x, y, w, h, color) {
+            ctx.fillStyle = 'rgba(0,0,0,0.4)';
+            ctx.fillRect(x, y, w, h);
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, 6, h);
+            ctx.fillStyle = color;
+            ctx.font = 'bold 18px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(title, x + 20, y + 30);
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 22px sans-serif';
+            ctx.fillText(val, x + 20, y + 68);
+        }
+
+        drawBox('🏆 Champions', document.getElementById('predChamp').value, 40, 340, 345, 90, '#d4af37');
+        drawBox('🥈 Runner-up', document.getElementById('predRunner').value, 415, 340, 345, 90, '#c0c0c0');
+        drawBox('🔥 Dark Horse', document.getElementById('predDark').value, 40, 450, 345, 90, '#ff7b00');
+        drawBox('⚽ Top Scorer', document.getElementById('predScorer').value, 415, 450, 345, 90, '#d4af37');
+        drawBox('⭐ Best Player', document.getElementById('predPlayer').value, 40, 560, 345, 90, '#0070f3');
+        drawBox('⚡ Surprise Shock', document.getElementById('predShock').value, 415, 560, 345, 90, '#8a2be2');
+
+        // Morocco Group Match Plotter Section
+        const moY = 680;
+        ctx.fillStyle = 'rgba(193, 16, 34, 0.1)';
+        ctx.fillRect(40, moY, 720, 360);
+        ctx.strokeStyle = '#c11022';
+        ctx.strokeRect(40, moY, 720, 360);
+
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 22px sans-serif';
+        ctx.fillText('🇲🇦 MOROCCO CAMPAIGN PREDICTIONS', 70, moY + 40);
+        ctx.textAlign = 'right';
+        ctx.fillText(document.getElementById('moroccoFinish').value.toUpperCase(), 730, moY + 40);
+
+        function drawMatch(t1, s1, s2, t2, isScotland, rY) {
+            ctx.fillStyle = 'rgba(0,0,0,0.4)';
+            ctx.fillRect(70, rY, 660, 70);
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(t1, 90, rY + 42);
+            
+            // Set up alignment properties for text and vector imagery metrics
+            ctx.textAlign = 'right';
+            if (isScotland) {
+                ctx.fillText(t2, 680, rY + 42);
+                const scotFlagImg = document.getElementById('scotlandFlag');
+                if (scotFlagImg.complete) {
+                    // Draws the specific high-res SVG flag directly inside the canvas layout row
+                    ctx.drawImage(scotFlagImg, 692, rY + 26, 24, 16);
+                }
+            } else {
+                ctx.fillText(t2, 710, rY + 42);
+            }
+
+            // Black score container squares
+            ctx.fillStyle = '#000';
+            ctx.strokeStyle = '#d4af37';
+            ctx.fillRect(340, rY + 15, 40, 40);
+            ctx.strokeRect(340, rY + 15, 40, 40);
+            ctx.fillRect(420, rY + 15, 40, 40);
+            ctx.strokeRect(420, rY + 15, 40, 40);
+
+            ctx.fillStyle = '#d4af37';
+            ctx.font = 'bold 22px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(s1, 360, rY + 43);
+            ctx.fillText(s2, 440, rY + 43);
+        }
+
+        drawMatch('🇲🇦 Morocco', document.getElementById('scoreM1').value, document.getElementById('scoreO1').value, 'Brazil 🇧🇷', false, moY + 80);
+        drawMatch('🇲🇦 Morocco', document.getElementById('scoreM2').value, document.getElementById('scoreO2').value, 'Scotland', true, moY + 170);
+        drawMatch('🇲🇦 Morocco', document.getElementById('scoreM3').value, document.getElementById('scoreO3').value, 'Haiti 🇭🇹', false, moY + 260);
+
+        // Canvas export trigger sequence execution
+        setTimeout(() => {
+            const img = canvas.toDataURL('image/png');
+            const dl = document.createElement('a');
+            dl.download = `WorldCup2026_Prediction_${nameVal.replace(/\s+/g, '_')}.png`;
+            dl.href = img;
+            dl.click();
+            btn.innerText = "Download Card Image";
+        }, 300);
+    });
+</script>
+</body>
+</html>
